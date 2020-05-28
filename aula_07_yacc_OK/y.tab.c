@@ -439,7 +439,7 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    18,    18,    19,    24,    27,    33,    38,    45,    50
+       0,    17,    17,    18,    23,    27,    33,    39,    47,    53
 };
 #endif
 
@@ -1213,65 +1213,70 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 18 "calc1.y" /* yacc.c:1646  */
-    { printf("Resultado: %d\n", (yyvsp[-1])); }
+#line 17 "calc1.y" /* yacc.c:1646  */
+    { printf(";Resultado: %d\n", (yyvsp[-1])); }
 #line 1219 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 24 "calc1.y" /* yacc.c:1646  */
+#line 23 "calc1.y" /* yacc.c:1646  */
     { (yyval) = (yyvsp[0]);
+	printf("PUSH %d\n", (yyvsp[0]));
           }
-#line 1226 "y.tab.c" /* yacc.c:1646  */
+#line 1227 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
 #line 27 "calc1.y" /* yacc.c:1646  */
     {
-          printf("Tirei parenteses em %d\n", (yyvsp[-1]));
+          printf(";Tirei parenteses em %d\n", (yyvsp[-1]));
           (yyval) = (yyvsp[-1]);
           }
-#line 1235 "y.tab.c" /* yacc.c:1646  */
+#line 1236 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
 #line 33 "calc1.y" /* yacc.c:1646  */
     {
-          printf("Encontrei divisao: %d / %d = %d\n", (yyvsp[-2]), (yyvsp[0]), (yyvsp[-2])/(yyvsp[0]));
+          printf(";Encontrei divisao: %d / %d = %d\n", (yyvsp[-2]), (yyvsp[0]), (yyvsp[-2])/(yyvsp[0]));
+	  printf("POP B\nPOP A\nDIV B\nPUSH A\n");
           (yyval) = (yyvsp[-2]) / (yyvsp[0]);
           }
-#line 1244 "y.tab.c" /* yacc.c:1646  */
+#line 1246 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 38 "calc1.y" /* yacc.c:1646  */
+#line 39 "calc1.y" /* yacc.c:1646  */
     {
-          printf("Encontrei mult: %d * %d = %d\n", (yyvsp[-2]), (yyvsp[0]), (yyvsp[-2])*(yyvsp[0]));
+          printf(";Encontrei mult: %d * %d = %d\n", (yyvsp[-2]), (yyvsp[0]), (yyvsp[-2])*(yyvsp[0]));
+	  printf("POP B\nPOP A\nMUL B\nPUSH A\n");
           (yyval) = (yyvsp[-2]) * (yyvsp[0]);
           }
-#line 1253 "y.tab.c" /* yacc.c:1646  */
+#line 1256 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 45 "calc1.y" /* yacc.c:1646  */
+#line 47 "calc1.y" /* yacc.c:1646  */
     {
-        printf("Encontrei soma: %d + %d = %d\n", (yyvsp[-2]), (yyvsp[0]), (yyvsp[-2])+(yyvsp[0]));
+        printf(";Encontrei soma: %d + %d = %d\n", (yyvsp[-2]), (yyvsp[0]), (yyvsp[-2])+(yyvsp[0]));
+	printf("POP B\nPOP A\nADD A, B\nPUSH A\n");
         (yyval) = (yyvsp[-2]) + (yyvsp[0]);
         }
-#line 1262 "y.tab.c" /* yacc.c:1646  */
+#line 1266 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 50 "calc1.y" /* yacc.c:1646  */
+#line 53 "calc1.y" /* yacc.c:1646  */
     {
-        printf("Encontrei sub: %d - %d = %d\n", (yyvsp[-2]), (yyvsp[0]), (yyvsp[-2])-(yyvsp[0]));
+        printf(";Encontrei sub: %d - %d = %d\n", (yyvsp[-2]), (yyvsp[0]), (yyvsp[-2])-(yyvsp[0]));
+	printf("POP B\nPOP A\nSUB A, B\nPUSH A\n");
         (yyval) = (yyvsp[-2]) - (yyvsp[0]);
     }
-#line 1271 "y.tab.c" /* yacc.c:1646  */
+#line 1276 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1275 "y.tab.c" /* yacc.c:1646  */
+#line 1280 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1499,7 +1504,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 56 "calc1.y" /* yacc.c:1906  */
+#line 60 "calc1.y" /* yacc.c:1906  */
 
 
 void yyerror(char *s) {
