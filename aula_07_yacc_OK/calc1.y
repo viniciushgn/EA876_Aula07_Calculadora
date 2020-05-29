@@ -3,20 +3,25 @@
 
 void yyerror(char *c);
 int yylex(void);
-
+int pot_enable = 0;
 %}
 
-%token INT SOMA EOL SUB MULT DIV ABRE FECHA
+%token INT SOMA EOL SUB MULT DIV POT ABRE FECHA
 %left SOMA
 %left SUB
 %left MULT
 %left DIV
+%left POT
 %%
 
 PROGRAMA:
-        PROGRAMA EXPRESSAO EOL { printf(";Resultado: %d\n", $2); }
-        |
-        ;
+        PROGRAMA EXPRESSAO EOL { printf(";Resultado: %d\n", $2);
+                                 if(pot_enable == 1){
+                                 printf("HLT\npotencia:\nMUL C\nDEC B\nJNZ potencia\nRET\n");
+                                                    }}
+                                                    |
+                                                    ;
+
 
 
 EXPRESSAO:
@@ -29,6 +34,19 @@ EXPRESSAO:
           $$ = $2;
           }
 
+    | EXPRESSAO POT EXPRESSAO {
+          int res; res = 1;
+          for(int i = 0; i < $3; i++){res = res * $1;}
+          printf(";Encontrei pot: %d ^ %d = %d\n", $1, $3,res);
+	  if ( $3 == 0 ) {
+	      printf("POP B\nPOP A\nMOV A, 1\nPUSH A\n");
+	  } else {
+	      
+          printf("POP B\nPOP A\nMOV C,A\nDEC B\nCall potencia\nPUSH A\n");
+          pot_enable = 1;
+	  }
+          $$ = res;
+          }
 
     | EXPRESSAO DIV EXPRESSAO  {
           printf(";Encontrei divisao: %d / %d = %d\n", $1, $3, $1/$3);
