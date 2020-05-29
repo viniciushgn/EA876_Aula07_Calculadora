@@ -62,15 +62,19 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 1 "calc1.y" /* yacc.c:339  */
+#line 11 "calc1.y" /* yacc.c:339  */
 
 #include <stdio.h>
 
 void yyerror(char *c);
 int yylex(void);
+int pot_enable = 0; /* Indica se a subrotina de potenciacao deve ser impressa.
+                      default: nao imprimir a subrotina */
 
+int ini_enable = 1; /* Indica se a inicializacao deve ser impressa.
+                      default: imprimir a inicializacao */
 
-#line 74 "y.tab.c" /* yacc.c:339  */
+#line 78 "y.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -111,8 +115,9 @@ extern int yydebug;
     SUB = 261,
     MULT = 262,
     DIV = 263,
-    ABRE = 264,
-    FECHA = 265
+    POT = 264,
+    ABRE = 265,
+    FECHA = 266
   };
 #endif
 /* Tokens.  */
@@ -122,8 +127,9 @@ extern int yydebug;
 #define SUB 261
 #define MULT 262
 #define DIV 263
-#define ABRE 264
-#define FECHA 265
+#define POT 264
+#define ABRE 265
+#define FECHA 266
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -141,7 +147,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 145 "y.tab.c" /* yacc.c:358  */
+#line 151 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -383,21 +389,21 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  2
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   26
+#define YYLAST   33
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  11
+#define YYNTOKENS  12
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  3
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  9
+#define YYNRULES  10
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  17
+#define YYNSTATES  19
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   265
+#define YYMAXUTOK   266
 
 #define YYTRANSLATE(YYX)                                                \
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -432,14 +438,15 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7,     8,     9,    10
+       5,     6,     7,     8,     9,    10,    11
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    17,    17,    18,    23,    27,    33,    39,    47,    53
+       0,    48,    48,    61,    65,    74,    81,   104,   111,   118,
+     125
 };
 #endif
 
@@ -449,7 +456,7 @@ static const yytype_uint8 yyrline[] =
 static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "INT", "SOMA", "EOL", "SUB", "MULT",
-  "DIV", "ABRE", "FECHA", "$accept", "PROGRAMA", "EXPRESSAO", YY_NULLPTR
+  "DIV", "POT", "ABRE", "FECHA", "$accept", "PROGRAMA", "EXPRESSAO", YY_NULLPTR
 };
 #endif
 
@@ -459,14 +466,14 @@ static const char *const yytname[] =
 static const yytype_uint16 yytoknum[] =
 {
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
-     265
+     265,   266
 };
 # endif
 
-#define YYPACT_NINF -7
+#define YYPACT_NINF -8
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-7)))
+  (!!((Yystate) == (-8)))
 
 #define YYTABLE_NINF -1
 
@@ -477,8 +484,8 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -7,     0,    -7,    -7,     2,    13,     6,     2,    -7,     2,
-       2,     2,    -7,    16,    18,    -6,    -7
+      -8,     0,    -8,    -8,     2,    15,     7,     2,    -8,     2,
+       2,     2,     2,    -8,    19,    22,    24,    -7,    -8
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -487,13 +494,13 @@ static const yytype_int8 yypact[] =
 static const yytype_uint8 yydefact[] =
 {
        3,     0,     1,     4,     0,     0,     0,     0,     2,     0,
-       0,     0,     5,     8,     9,     7,     6
+       0,     0,     0,     5,     9,    10,     8,     7,     6
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -7,    -7,    -3
+      -8,    -8,    -3
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
@@ -507,36 +514,40 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-       2,     6,    11,     3,    13,     3,    14,    15,    16,     4,
-       7,     4,     9,    10,    11,     0,    12,     7,     8,     9,
-      10,    11,     9,    10,    11,    10,    11
+       2,     6,    12,     3,    14,     3,    15,    16,    17,    18,
+       4,     7,     4,     9,    10,    11,    12,     0,    13,     7,
+       8,     9,    10,    11,    12,     9,    10,    11,    12,    10,
+      11,    12,    11,    12
 };
 
 static const yytype_int8 yycheck[] =
 {
-       0,     4,     8,     3,     7,     3,     9,    10,    11,     9,
-       4,     9,     6,     7,     8,    -1,    10,     4,     5,     6,
-       7,     8,     6,     7,     8,     7,     8
+       0,     4,     9,     3,     7,     3,     9,    10,    11,    12,
+      10,     4,    10,     6,     7,     8,     9,    -1,    11,     4,
+       5,     6,     7,     8,     9,     6,     7,     8,     9,     7,
+       8,     9,     8,     9
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    12,     0,     3,     9,    13,    13,     4,     5,     6,
-       7,     8,    10,    13,    13,    13,    13
+       0,    13,     0,     3,    10,    14,    14,     4,     5,     6,
+       7,     8,     9,    11,    14,    14,    14,    14,    14
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    11,    12,    12,    13,    13,    13,    13,    13,    13
+       0,    12,    13,    13,    14,    14,    14,    14,    14,    14,
+      14
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     3,     0,     1,     3,     3,     3,     3,     3
+       0,     2,     3,     0,     1,     3,     3,     3,     3,     3,
+       3
 };
 
 
@@ -1213,70 +1224,120 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 17 "calc1.y" /* yacc.c:1646  */
-    { printf(";Resultado: %d\n", (yyvsp[-1])); }
-#line 1219 "y.tab.c" /* yacc.c:1646  */
+#line 48 "calc1.y" /* yacc.c:1646  */
+    {
+    ini_enable = 1;  /* Prepara para  uma nova expressao */
+    printf("\n;Fim do programa principal\nHLT\n");
+    printf("\n;Resultado: %d\n", (yyvsp[-1])); /* A fim de facilitar testes, imprimimos o
+                                      resultado esperado */
+
+    if(pot_enable == 1){ /* Caso em que a subrotina de potenciacao deve ser
+                            impressa */
+        printf("\n;Subrotina de Potenciacao\n\n");
+        printf("potencia:\nMUL C\nDEC B\nJNZ potencia\nRET\n");
+        pot_enable = 0;
+      }
+    }
+#line 1242 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 23 "calc1.y" /* yacc.c:1646  */
-    { (yyval) = (yyvsp[0]);
-	printf("PUSH %d\n", (yyvsp[0]));
-          }
-#line 1227 "y.tab.c" /* yacc.c:1646  */
+#line 65 "calc1.y" /* yacc.c:1646  */
+    { /* INTEIRO */
+    (yyval) = (yyvsp[0]);
+    if(ini_enable == 1) { /* Inicializacao */
+      printf(";Programa principal\n\n");
+      ini_enable = 0;
+    }
+	  printf("PUSH %d\n", (yyvsp[0])); /* Coloca o inteiro na pilha */
+  }
+#line 1255 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 27 "calc1.y" /* yacc.c:1646  */
-    {
-          printf(";Tirei parenteses em %d\n", (yyvsp[-1]));
-          (yyval) = (yyvsp[-1]);
-          }
-#line 1236 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 6:
-#line 33 "calc1.y" /* yacc.c:1646  */
-    {
-          printf(";Encontrei divisao: %d / %d = %d\n", (yyvsp[-2]), (yyvsp[0]), (yyvsp[-2])/(yyvsp[0]));
-	  printf("POP B\nPOP A\nDIV B\nPUSH A\n");
-          (yyval) = (yyvsp[-2]) / (yyvsp[0]);
-          }
-#line 1246 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 7:
-#line 39 "calc1.y" /* yacc.c:1646  */
-    {
-          printf(";Encontrei mult: %d * %d = %d\n", (yyvsp[-2]), (yyvsp[0]), (yyvsp[-2])*(yyvsp[0]));
-	  printf("POP B\nPOP A\nMUL B\nPUSH A\n");
-          (yyval) = (yyvsp[-2]) * (yyvsp[0]);
-          }
-#line 1256 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 8:
-#line 47 "calc1.y" /* yacc.c:1646  */
-    {
-        printf(";Encontrei soma: %d + %d = %d\n", (yyvsp[-2]), (yyvsp[0]), (yyvsp[-2])+(yyvsp[0]));
-	printf("POP B\nPOP A\nADD A, B\nPUSH A\n");
-        (yyval) = (yyvsp[-2]) + (yyvsp[0]);
-        }
+#line 74 "calc1.y" /* yacc.c:1646  */
+    { /* Tratamento de Parenteses */
+    /* Nota-se que nao sao geradas instrucoes em assembly, porem esta regra eh
+    importante para garantir a correta precedencia das operacoes */
+    printf(";Tirei parenteses em %d\n", (yyvsp[-1]));
+    (yyval) = (yyvsp[-1]);
+  }
 #line 1266 "y.tab.c" /* yacc.c:1646  */
     break;
 
-  case 9:
-#line 53 "calc1.y" /* yacc.c:1646  */
-    {
-        printf(";Encontrei sub: %d - %d = %d\n", (yyvsp[-2]), (yyvsp[0]), (yyvsp[-2])-(yyvsp[0]));
-	printf("POP B\nPOP A\nSUB A, B\nPUSH A\n");
-        (yyval) = (yyvsp[-2]) - (yyvsp[0]);
+  case 6:
+#line 81 "calc1.y" /* yacc.c:1646  */
+    { /* Tramento de Potenciacao */
+    /* Calcula o resultado da potencicao */
+    int res; res = 1;
+    for(int i = 0; i < (yyvsp[0]); i++){res = res * (yyvsp[-2]);}
+    printf("\n;Operacao: %d ^ %d = %d\n", (yyvsp[-2]), (yyvsp[0]),res);
+
+    /* Casos para a potenciao */
+    if ( (yyvsp[0]) == 0 ) { /* Expoente igual a zero */
+      printf("POP B\nPOP A\nMOV A, 1\nPUSH A\n");
+    } else {
+      /*Expoente diferente de zero*/
+      printf("POP B\nPOP A\nMOV C,A\nDEC B\nCall potencia\nPUSH A\n");
+
+      /* Foi criada uma subrotina "potencia" para realizar a exponencicao.
+      A variavel "pot_enable" indica se essa subrotina sera impressa ao final
+      do programa */
+
+      pot_enable = 1; /* Indica que a subrotina deve ser impressa */
+     }
+     (yyval) = res;
+     printf(";\n");
     }
-#line 1276 "y.tab.c" /* yacc.c:1646  */
+#line 1293 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 7:
+#line 104 "calc1.y" /* yacc.c:1646  */
+    {
+    printf("\n;Operacao: %d / %d = %d\n", (yyvsp[-2]), (yyvsp[0]), (yyvsp[-2])/(yyvsp[0]));
+    printf("POP B\nPOP A\nDIV B\nPUSH A\n");
+    printf(";\n");
+    (yyval) = (yyvsp[-2]) / (yyvsp[0]);
+    }
+#line 1304 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 8:
+#line 111 "calc1.y" /* yacc.c:1646  */
+    {
+    printf("\n;Operacao: %d * %d = %d\n", (yyvsp[-2]), (yyvsp[0]), (yyvsp[-2])*(yyvsp[0]));
+  	printf("POP B\nPOP A\nMUL B\nPUSH A\n");
+    printf(";\n");
+    (yyval) = (yyvsp[-2]) * (yyvsp[0]);
+    }
+#line 1315 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 9:
+#line 118 "calc1.y" /* yacc.c:1646  */
+    {
+    printf("\n;Operacao: %d + %d = %d\n", (yyvsp[-2]), (yyvsp[0]), (yyvsp[-2])+(yyvsp[0]));
+    printf("POP B\nPOP A\nADD A, B\nPUSH A\n");
+    printf(";\n");
+    (yyval) = (yyvsp[-2]) + (yyvsp[0]);
+    }
+#line 1326 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 10:
+#line 125 "calc1.y" /* yacc.c:1646  */
+    {
+    printf("\n;Operacao: %d - %d = %d\n", (yyvsp[-2]), (yyvsp[0]), (yyvsp[-2])-(yyvsp[0]));
+    printf("POP B\nPOP A\nSUB A, B\nPUSH A\n");
+    printf(";\n");
+    (yyval) = (yyvsp[-2]) - (yyvsp[0]);
+    }
+#line 1337 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1280 "y.tab.c" /* yacc.c:1646  */
+#line 1341 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1504,7 +1565,10 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 60 "calc1.y" /* yacc.c:1906  */
+#line 133 "calc1.y" /* yacc.c:1906  */
+
+
+/* Codigo---------------------------------------------------------------------*/
 
 
 void yyerror(char *s) {

@@ -1,6 +1,7 @@
 
 %{
 #include <stdlib.h>
+#include <stdio.h>
 void yyerror(char *);
 
 #include "y.tab.h"
@@ -26,7 +27,7 @@ void yyerror(char *);
           return MULT;
         }
 
-\^     {
+[\^]     {
           return POT;
         }
 
