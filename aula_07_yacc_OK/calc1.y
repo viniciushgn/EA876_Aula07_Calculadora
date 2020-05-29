@@ -38,6 +38,7 @@ EXPRESSAO:
           int res; res = 1;
           for(int i = 0; i < $3; i++){res = res * $1;}
           printf(";Encontrei pot: %d ^ %d = %d\n", $1, $3,res);
+
 	  if ( $3 == 0 ) {
 	      printf("POP B\nPOP A\nMOV A, 1\nPUSH A\n");
 	  } else {
