@@ -26,6 +26,11 @@ void yyerror(char *);
           return MULT;
         }
 
+\^     {
+          return POT;
+        }
+
+
 [/]     {
           return DIV;
         }

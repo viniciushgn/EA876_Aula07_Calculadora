@@ -51,8 +51,9 @@ extern int yydebug;
     SUB = 261,
     MULT = 262,
     DIV = 263,
-    ABRE = 264,
-    FECHA = 265
+    POT = 264,
+    ABRE = 265,
+    FECHA = 266
   };
 #endif
 /* Tokens.  */
@@ -62,8 +63,9 @@ extern int yydebug;
 #define SUB 261
 #define MULT 262
 #define DIV 263
-#define ABRE 264
-#define FECHA 265
+#define POT 264
+#define ABRE 265
+#define FECHA 266
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
